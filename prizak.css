@@ -140,28 +140,17 @@ button.copy:active {
 }
 
 /* Messages */
-.error,
-.success {
-  padding: 15px;
-  border-radius: 5px;
-  margin-bottom: 20px;
-  display: none;
-  font-size: 14px;
-}
-
-.error {
-  background: #fee;
-  color: var(--error);
-  border-left: 4px solid var(--error);
-}
-
 .success {
   background: #efe;
   color: var(--success);
   border-left: 4px solid var(--success);
+  padding: 12px;
+  border-radius: 8px;
+  margin-top: 12px;
+  display: none;
 }
 
-/* --- SAFE SIGN IN UPGRADE --- */
+/* --- SIGN IN (SAFE + CLEAN) --- */
 
 .signin-form {
   display: flex;
@@ -209,14 +198,6 @@ button.copy:active {
   box-shadow: none;
 }
 
-#signinMsg {
-  margin-top: 14px;
-  display: none;
-  padding: 12px 14px;
-  border-radius: 8px;
-  font-size: 14px;
-}
-
 /* Mobile */
 @media (max-width: 600px) {
   .container {
@@ -226,4 +207,4 @@ button.copy:active {
   .tabs {
     overflow-x: auto;
   }
-  }
+    }
