@@ -1,1 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Prizak</title>
+  <style>
+    :root{ --bg:#f6f8fb; --card:#ffffff; --accent:#4f46e5; --muted:#6b7280; --radius:12px; }
+    *{box-sizing:border-box}
+    body{font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; margin:0; background:var(--bg); color:#111827}
+    .container{max-width:900px;margin:48px auto;padding:20px}
+    /* Tabs */
+    .tabs{display:flex;gap:8px;padding:8px;background:transparent}
+    .tab{background:transparent;border:0;padding:10px 16px;border-radius:10px 10px 0 0;color:var(--muted);cursor:pointer;font-weight:600}
+    .tab.active{background:var(--card);color:var(--accent);box-shadow:0 2px 6px rgba(16,24,40,0.04);}
+    header{background:linear-gradient(180deg,transparent,transparent);}
+    .tab-bar{display:flex;align-items:center;justify-content:space-between;background:transparent;padding:8px 0}
+    .brand{font-weight:700;color:var(--accent)}
 
+    main{background:transparent;padding:20px}
+    .tab-content{display:none;padding:24px;background:var(--card);border-radius:var(--radius);box-shadow:0 6px 18px rgba(15,23,42,0.05)}
+    .tab-content.active{display:block}
+
+    h1{margin:0 0 12px 0;font-size:28px;color:#0f172a}
+    p{margin:0;color:var(--muted)}
+
+    /* Card inside scripts */
+    .card{background:linear-gradient(180deg,#fff,#fbfdff);padding:18px;border-radius:14px;border:1px solid rgba(15,23,42,0.04)}
+    .card h2{margin:0 0 10px 0;font-size:18px;color:#0f172a}
+
+    textarea.code{width:100%;min-height:80px;border-radius:10px;border:1px dashed rgba(15,23,42,0.06);padding:12px;font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Courier New", monospace;font-size:13px;background:#f8fafc;resize:vertical}
+    .actions{display:flex;gap:8px;align-items:center;justify-content:flex-end;margin-top:12px}
+    button.copy{background:var(--accent);color:white;border:0;padding:8px 12px;border-radius:10px;cursor:pointer}
+    button.copy:active{transform:translateY(1px)}
+
+    @media (max-width:600px){.container{margin:20px;padding:12px}.tabs{overflow:auto}}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="tab-bar">
+        <div class="brand">Prizak</div>
+        <nav class="tabs" role="tablist" aria-label="Main tabs">
+          <button class="tab active" data-target="home" role="tab" aria-selected="true">Home</button>
+          <button class="tab" data-target="scripts" role="tab" aria-selected="false">Scripts</button>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section id="home" class="tab-content active" role="tabpanel">
+        <h1 title="Welcome to Prizak!">Welcome to Prizak!</h1>
+        <p title="Prizak was founded by LarryInvictus, and also please note that anything that this site says, IS OFFICIAL!">Prizak was founded by LarryInvictus, and also please note that anything that this site says, IS OFFICIAL!</p>
+      </section>
+
+      <section id="scripts" class="tab-content" role="tabpanel">
+        <div class="card">
+          <h2>PRIZAK GUI</h2>
+          <p style="color:var(--muted);margin:0 0 12px 0;">Copy the string below to load the GUI in supported environments.</p>
+          <textarea id="guiCode" class="code" readonly>loadstring(game:HttpGet("https://raw.githubusercontent.com/LarryInvictus/Prizak-GUI/main/gui.lua"))()</textarea>
+          <div class="actions">
+            <button id="copyBtn" class="copy">Copy</button>
+            <span id="copyMsg" style="color:var(--muted);font-size:13px"></span>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    // Tab switching
+    document.querySelectorAll('.tab').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected','false') });
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        btn.classList.add('active'); btn.setAttribute('aria-selected','true');
+        const target = btn.getAttribute('data-target');
+        const el = document.getElementById(target);
+        if(el) el.classList.add('active');
+      });
+    });
+
+    // Copy to clipboard
+    const copyBtn = document.getElementById('copyBtn');
+    const guiCode = document.getElementById('guiCode');
+    const copyMsg = document.getElementById('copyMsg');
+
+    copyBtn.addEventListener('click', async () => {
+      try{
+        // Use navigator.clipboard if available
+        if(navigator.clipboard && navigator.clipboard.writeText){
+          await navigator.clipboard.writeText(guiCode.value);
+        } else {
+          // Fallback for older browsers
+          guiCode.select();
+          document.execCommand('copy');
+          window.getSelection().removeAllRanges();
+        }
+        copyMsg.textContent = 'Copied!';
+        setTimeout(()=>copyMsg.textContent = '',2000);
+      }catch(e){
+        copyMsg.textContent = 'Copy failed';
+        console.error(e);
+      }
+    });
+  </script>
+</body>
+</html>
