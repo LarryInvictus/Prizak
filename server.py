@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 DB_FILE = "accounts.json"
 
-# Load or create database
+# Create DB if missing
 if not os.path.exists(DB_FILE):
     with open(DB_FILE, "w") as f:
         json.dump({}, f)
