@@ -1,6 +1,4 @@
-// ---------------------------
-// TAB SWITCHING
-// ---------------------------
+// Tabs
 document.querySelectorAll('.tab').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
@@ -11,9 +9,7 @@ document.querySelectorAll('.tab').forEach(btn => {
   });
 });
 
-// ---------------------------
-// COPY BUTTONS
-// ---------------------------
+// Copy buttons
 document.querySelectorAll('.copy').forEach(button => {
   button.addEventListener('click', async () => {
     const id = button.dataset.copy;
@@ -30,9 +26,7 @@ document.querySelectorAll('.copy').forEach(button => {
   });
 });
 
-// ---------------------------
-// SIGN IN (local only)
-// ---------------------------
+// Sign In (local only)
 const signinBtn = document.getElementById('signinBtn');
 const signinMsg = document.getElementById('signinMsg');
 
